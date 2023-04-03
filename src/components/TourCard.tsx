@@ -1,29 +1,15 @@
-import { Paper, Grid, Typography, Box, Rating } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
+
 import AccessTime from "@mui/icons-material/AccessTime";
 import "./TourCard.css";
 
 // theme
 import { createTheme, ThemeProvider } from "@mui/material";
-
-// typescript overrides for typography
-declare module "@mui/material/styles" {
-	interface TypographyVariants {
-		body3: React.CSSProperties;
-	}
-
-	// allow configuration using `createTheme`
-	interface TypographyVariantsOptions {
-		body3?: React.CSSProperties;
-	}
-}
-
-// Update the Typography's variant prop options
-declare module "@mui/material/Typography" {
-	interface TypographyPropsVariantOverrides {
-		body3: true;
-		h3: false;
-	}
-}
+import { Tours } from "../App";
 
 // creating new theme
 const theme = createTheme({
@@ -40,6 +26,8 @@ const theme = createTheme({
 				},
 				{
 					props: {
+						// see ./types/index.d.ts to see
+						// how to handle this type error when adding
 						variant: "body3",
 					},
 					style: {
@@ -51,38 +39,38 @@ const theme = createTheme({
 	},
 });
 
-const TourCard = () => {
+// types
+type TourCardProps = {
+	tour: Tours;
+};
+const TourCard = ({ tour }: TourCardProps) => {
 	return (
 		<Grid item xs={3}>
 			<ThemeProvider theme={theme}>
 				<Paper square variant="outlined">
-					<img
-						className="img"
-						src="https://images.unsplash.com/photo-1489447068241-b3490214e879?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZmFsbHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-						alt=""
-					/>
+					<img className="img" src={tour.image} alt={tour.name} />
 					<Box paddingX={1}>
 						<Typography variant="subtitle1" color="initial">
-							Immerse into the falls
+							{tour.name}
 						</Typography>
 						<Box sx={{ display: "flex", alignItems: "center" }}>
 							<AccessTime sx={{ width: ".90rem", paddingBottom: ".1rem" }} />
 							<Typography variant="body2" component="p" marginLeft={0.5}>
-								5 hours
+								{tour.duration} hours
 							</Typography>
 						</Box>
 
 						<Box marginTop={3}>
 							<Rating name="disabled" size="small" value={3} precision={0.1} readOnly />
 							<Typography variant="body2" component="span">
-								4.5
+								{tour.rating}
 							</Typography>
 							<Typography variant="body3" component="span">
-								(655 reviews)
+								({tour.numberOfReviews} reviews)
 							</Typography>
 						</Box>
 						<Box>
-							<Typography variant="h6">From C $450</Typography>
+							<Typography variant="h6">From C ${tour.price}</Typography>
 						</Box>
 					</Box>
 				</Paper>
