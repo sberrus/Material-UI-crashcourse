@@ -3,13 +3,14 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
+import Link from "@mui/material/Link";
 
 import AccessTime from "@mui/icons-material/AccessTime";
 import "./TourCard.css";
 
 // theme
 import { createTheme, ThemeProvider } from "@mui/material";
-import { Tours } from "../App";
+import { Tours } from "../pages/Home";
 
 // creating new theme
 const theme = createTheme({
@@ -42,17 +43,18 @@ const theme = createTheme({
 // types
 type TourCardProps = {
 	tour: Tours;
+	city: number;
 };
-const TourCard = ({ tour }: TourCardProps) => {
+const TourCard = ({ tour, city }: TourCardProps) => {
 	return (
 		<Grid item xs={3}>
 			<ThemeProvider theme={theme}>
 				<Paper square variant="outlined">
-					<img className="img" src={tour.image} alt={tour.name} />
+					<img className="img cardImg" src={tour.image} alt={tour.name} />
 					<Box paddingX={1}>
-						<Typography variant="subtitle1" color="initial">
+						<Link href={`/${city}/${tour.id}`} variant="subtitle1">
 							{tour.name}
-						</Typography>
+						</Link>
 						<Box sx={{ display: "flex", alignItems: "center" }}>
 							<AccessTime sx={{ width: ".90rem", paddingBottom: ".1rem" }} />
 							<Typography variant="body2" component="p" marginLeft={0.5}>
