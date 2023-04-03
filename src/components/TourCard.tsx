@@ -1,9 +1,31 @@
 import { Paper, Grid, Typography, Box, Rating } from "@mui/material";
 import AccessTime from "@mui/icons-material/AccessTime";
 import "./TourCard.css";
+
 // theme
 import { createTheme, ThemeProvider } from "@mui/material";
 
+// typescript overrides for typography
+declare module "@mui/material/styles" {
+	interface TypographyVariants {
+		body3: React.CSSProperties;
+	}
+
+	// allow configuration using `createTheme`
+	interface TypographyVariantsOptions {
+		body3?: React.CSSProperties;
+	}
+}
+
+// Update the Typography's variant prop options
+declare module "@mui/material/Typography" {
+	interface TypographyPropsVariantOverrides {
+		body3: true;
+		h3: false;
+	}
+}
+
+// creating new theme
 const theme = createTheme({
 	components: {
 		MuiTypography: {
@@ -28,6 +50,7 @@ const theme = createTheme({
 		},
 	},
 });
+
 const TourCard = () => {
 	return (
 		<Grid item xs={3}>
