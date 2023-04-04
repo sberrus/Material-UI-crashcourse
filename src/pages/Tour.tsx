@@ -1,13 +1,29 @@
 // imports
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 import Box from "@mui/material/Box";
 
 // data
 import data from "../data/data.json";
-import { useEffect, useState } from "react";
+import imagesCollage from "../data/imageList.json";
+
+// style
+import "./Tour.css";
+
+// types
 import { Tours } from "./Home";
+
+// util
+function srcset(image: string, size: number, rows = 1, cols = 1) {
+	return {
+		src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
+		srcSet: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format&dpr=2 2x`,
+	};
+}
 
 const Tour = () => {
 	// hooks
@@ -46,8 +62,20 @@ const Tour = () => {
 				{tour?.name}
 			</Typography>
 			{/* image */}
-			<Box>
-				<img className="img" src={tour?.image} alt={tour?.name} />
+			<Box marginTop={3} sx={{ display: "flex" }}>
+				<img className="img experience-img" src={tour?.image} alt={tour?.name} />
+				<ImageList
+					variant="quilted"
+					cols={4}
+					rowHeight={121}
+					sx={{ width: "30%", height: 325, marginLeft: 1, marginTop: 0 }}
+				>
+					{imagesCollage.map((item) => (
+						<ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
+							<img {...srcset(item.img, 121, item.rows, item.cols)} alt={item.title} loading="lazy" />
+						</ImageListItem>
+					))}
+				</ImageList>
 			</Box>
 
 			{/* about this ticket */}

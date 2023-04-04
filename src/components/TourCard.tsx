@@ -1,3 +1,4 @@
+import { Link as RLink } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -52,7 +53,7 @@ const TourCard = ({ tour, city }: TourCardProps) => {
 				<Paper square variant="outlined">
 					<img className="img cardImg" src={tour.image} alt={tour.name} />
 					<Box paddingX={1}>
-						<Link href={`/${city}/${tour.id}`} variant="subtitle1">
+						<Link to={`/${city}/${tour.id}`} variant="subtitle1" component={RLink}>
 							{tour.name}
 						</Link>
 						<Box sx={{ display: "flex", alignItems: "center" }}>

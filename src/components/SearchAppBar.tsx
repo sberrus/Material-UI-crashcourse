@@ -1,3 +1,4 @@
+import { Link as RLink } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -59,10 +60,11 @@ export default function SearchAppBar() {
 						<MenuIcon />
 					</IconButton>
 					<Link
-						href="/"
+						to="/"
 						sx={{ flexGrow: 1, display: { xs: "none", sm: "block", fontWeight: "bold" } }}
 						color="inherit"
 						underline="none"
+						component={RLink}
 					>
 						Amazing adventures
 					</Link>
