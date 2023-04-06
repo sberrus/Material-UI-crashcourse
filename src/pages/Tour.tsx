@@ -6,13 +6,11 @@ import Typography from "@mui/material/Typography";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Box from "@mui/material/Box";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 // data
 import data from "../data/data.json";
 import imagesCollage from "../data/imageList.json";
-
-// style
-import "./Tour.css";
 
 // types
 import { Tours } from "./Home";
@@ -29,6 +27,7 @@ const Tour = () => {
 	// hooks
 	const { city, tourId } = useParams();
 	const navigate = useNavigate();
+	const isMobile = useMediaQuery("(max-width:780px)");
 
 	// states
 	const [tour, setTour] = useState<Tours | null>(null);
@@ -58,17 +57,22 @@ const Tour = () => {
 
 	return (
 		<Container maxWidth="md" sx={{ marginY: 5 }}>
-			<Typography variant="h2" component="h1">
+			<Typography variant={isMobile ? "h3" : "h2"} component="h1">
 				{tour?.name}
 			</Typography>
 			{/* image */}
 			<Box marginTop={3} sx={{ display: "flex" }}>
-				<img className="img experience-img" src={tour?.image} alt={tour?.name} />
+				<img
+					className="img experience-img"
+					style={{ width: isMobile ? "100%" : "60%", height: "325px" }}
+					src={tour?.image}
+					alt={tour?.name}
+				/>
 				<ImageList
 					variant="quilted"
 					cols={4}
 					rowHeight={121}
-					sx={{ width: "30%", height: 325, marginLeft: 1, marginTop: 0 }}
+					sx={{ width: isMobile ? "0%" : "40%", height: 325, marginLeft: 1, marginTop: 0 }}
 				>
 					{imagesCollage.map((item) => (
 						<ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
